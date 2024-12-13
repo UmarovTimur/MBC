@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*:focus,
+*:active {
+    /* outline: none; */
+}
+
+a:focus,
+a:active {
+    /* outline: none; */
+}
+a:hover {
+    color: #ff9900;
+}
+
+html,
+body {
+    height: 100%;
+    /* min-width: $minWidth + px; */
+}
+
+body {
+    line-height: 1;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+body > p, body > div {
+    display: inline-block; /* или block, если нужно */
+    width: auto; /* или установить фиксированную ширину */
+}
+
+body > p, body > div {
+    position: relative;
+    z-index: 10; /* Обеспечивает, что элемент будет наверху */
+}
+
+
+
+/* =========================  HEADER  ===================================== */
+
+
+
+
+
+/* ======================================================================= */
+
+
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    min-height: 700px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0px 15px;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 30px;
+}
+
+.chapter_item {
+    flex: 0 0 calc(50% - 20px);
+    height: auto;
+}
+
+.chapter_item iframe {
+    
+}
+
+h2 {
+    font-weight: bold;
+    font-size:xx-large;
+    margin-bottom: 10px ;
+}
+
+.prev_next__links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+        
+}
+.links_title, .links_sub-title {
+}
+.links_sub-title {
+
+}
+
+.prev_next__links a {
+
+}
+
+/* ============================================================== */
+.book_list {
+    padding-bottom: 40px;
+}
+.listing {
+    max-width: 100%;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    flex: 0 0 100%;
+}
+.listing h3 {
+    font-size: 31px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px 0px 20px 0px;
+}
+.listing-main {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-template: repeat(6, 1fr) / repeat(3, minmax(150px, 1fr));
+    column-gap: 50px;
+}
+.listing-main.listing-second {
+    grid-template: repeat(8, 1fr) / repeat(3, minmax(150px, 1fr));
+}
+
+.listing-main a {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 140%;
+}
+
