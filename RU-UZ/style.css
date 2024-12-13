@@ -3,6 +3,7 @@
     padding: 0;
     border: 0px;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 
 *,
@@ -22,9 +23,7 @@ a:focus,
 a:active {
     /* outline: none; */
 }
-a:hover {
-    color: #ff9900;
-}
+
 
 html,
 body {
@@ -93,14 +92,14 @@ body > p, body > div {
 .row {
     display: flex;
     justify-content: space-between;
-    column-gap: 20px;
+    column-gap: 10px;
     padding-right: 15px;
     padding-left: 15px;
     padding-top: 30px;
 }
 
 .chapter_item {
-    flex: 0 0 calc(50% - 20px);
+    flex: 1 0 calc(33.3% - 30px);
     height: auto;
 }
 
@@ -161,5 +160,9 @@ h2 {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
     line-height: 140%;
+}
+
+.listing-main a:hover {
+    color: #ff9900;
 }
 
