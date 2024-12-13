@@ -149,7 +149,7 @@ const RU_CHAPTERS_NAME = [
     "Откровение",
 ]
 
-const createIFrameHTML = (ruPath, uzPath, prevLink, nextLink, chapterIndex, verseIndex) => `
+const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterIndex, verseIndex) => `
     <!DOCTYPE html>
     <html lang="uz">
     <head>
@@ -169,7 +169,13 @@ const createIFrameHTML = (ruPath, uzPath, prevLink, nextLink, chapterIndex, vers
                 <div class="chapter_item">
                     <h2 class="title is-3" >UZBEK (google translate)</h2>
                     <iframe id="chapter_iframe_uz" style="height:100%;width:100%;" src="${uzPath}" frameborder="0"></iframe>
-                </div>  
+                </div>
+                ${mkPath ? `
+                    <div class="chapter_item">
+                        <h2 class="title is-3" >Uzbek Kitobook</h2>
+                        <iframe id="mk_book_iframe" style="height:100%;width:100%;" src="${mkPath}" frameborder="0"></iframe>
+                    </div>  
+                    ` : ""}
             </div>
             
             <div class="container">
@@ -377,6 +383,7 @@ const processChapters = () => {
             const ruVersePath = path.join(ruChapterPath, verse);
             const uzVersePath = path.join(uzChapterPath, verse);
             const ruUzVersePath = path.join(ruUzChapterPath, verse);
+            const mkVersePath = path.join(MK_PATH, chapter, verse);
 
             // Проверяем, существует ли соответствующий файл в UZ
             if (fs.existsSync(uzVersePath)) {
@@ -387,6 +394,11 @@ const processChapters = () => {
                 const relativeUzPath = path.relative(
                     path.dirname(ruUzVersePath),
                     uzVersePath
+                );
+
+                const relativeMkPath = verseIndex == 0 ? null : path.relative(
+                    path.dirname(ruUzVersePath),
+                    mkVersePath
                 );
 
                 // Определяем ссылки на предыдущий и следующий стих
@@ -414,7 +426,7 @@ const processChapters = () => {
                         : null;
 
                 // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, prevLink, nextLink, chapterIndex, verseIndex);
+                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, chapterIndex, verseIndex);
                 // removeEmandSpanHTML(uzVersePath)
                 fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
             } else {
@@ -471,6 +483,6 @@ const loadMK = () => {
 
 
 // Запускаем процесс копирования и обработки
-// processChapters();
+processChapters();
 // Load kitobook Muqaddas Kitob
-loadMK();
+// loadMK();
