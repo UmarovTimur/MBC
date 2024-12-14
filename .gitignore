@@ -12,6 +12,7 @@ lerna-debug.log*
 src
 RU-UZ/chapters
 MK-kito*
+books
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
