@@ -161,7 +161,23 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
     <body>
         <div class="wrapper">
 
+            <header class="header">
+                <div class="header__content">
+                    <div class="header__row">
+                        ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Previous</a>`: '<button disabled button" class="button is-link are-normal">← Previous</button>' }
+                        <a class="button is-link are-normal" href="../../">MBC</a>
+                        ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Next →</a>`: `<button disabled button" class="button is-link are-normal">Next →</button>` }
+                    </div>
+                </div>
+            </header>
+
             <div class="row">
+                ${mkPath ? `
+                    <div class="chapter_item">
+                        <h2 class="title is-3" >Uzbek Kitobook</h2>
+                        <iframe id="mk_book_iframe" style="height:100%;width:100%;" src="${mkPath}" frameborder="0"></iframe>
+                    </div>  
+                    ` : ""}
                 <div class="chapter_item">
                     <h2 class="title is-3" >Русский с комментариями</h2>
                     <iframe id="chapter_iframe_ru" style="height:100%;width:100%;" src="${ruPath}" frameborder="0"></iframe>
@@ -170,19 +186,6 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
                     <h2 class="title is-3" >UZBEK (google translate)</h2>
                     <iframe id="chapter_iframe_uz" style="height:100%;width:100%;" src="${uzPath}" frameborder="0"></iframe>
                 </div>
-                ${mkPath ? `
-                    <div class="chapter_item">
-                        <h2 class="title is-3" >Uzbek Kitobook</h2>
-                        <iframe id="mk_book_iframe" style="height:100%;width:100%;" src="${mkPath}" frameborder="0"></iframe>
-                    </div>  
-                    ` : ""}
-            </div>
-            
-            <div class="container">
-                <nav class="prev_next__links">
-                    ${prevLink ? `<a class="button is-link is-medium" href="${prevLink}">← Previous</a>`: '' }
-                    ${nextLink ? `<a class="button is-link is-medium" href="${nextLink}">Next →</a>`: '' }
-                </nav>
             </div>
 
             <div class="book_list">
