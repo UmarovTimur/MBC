@@ -7,7 +7,6 @@ const SRC_PATH = path.join(__dirname, 'src');
 const RU_PATH = path.join(SRC_PATH, 'RU');
 const UZ_PATH = path.join(SRC_PATH, 'UZ');
 const RU_UZ_PATH = path.join(__dirname, 'RU-UZ', 'chapters');
-
 const MK_PATH = path.join(__dirname, "MK-kito");
 
 
@@ -151,7 +150,7 @@ const RU_CHAPTERS_NAME = [
 
 const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterIndex, verseIndex) => `
     <!DOCTYPE html>
-    <html lang="uz">
+    <html data-theme=light lang="uz">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -161,6 +160,7 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
     </head>
     <body>
         <div class="wrapper">
+
             <div class="row">
                 <div class="chapter_item">
                     <h2 class="title is-3" >Русский с комментариями</h2>
@@ -180,8 +180,8 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
             
             <div class="container">
                 <nav class="prev_next__links">
-                    ${prevLink ? `<a class="button is-info is-medium" href="${prevLink}">← Previous</a>`: '' }
-                    ${nextLink ? `<a class="button is-info is-medium" href="${nextLink}">Next →</a>`: '' }
+                    ${prevLink ? `<a class="button is-link is-medium" href="${prevLink}">← Previous</a>`: '' }
+                    ${nextLink ? `<a class="button is-link is-medium" href="${nextLink}">Next →</a>`: '' }
                 </nav>
             </div>
 
