@@ -3,11 +3,13 @@ const path = require('path');
 const { JSDOM } = require("jsdom");
 const beautify = require("js-beautify").html;
 
-const SRC_PATH = path.join(__dirname, 'src');
+const SRC_PATH = path.join(__dirname, 'books');
+const DIST_PATH = path.join(__dirname, 'dist,', 'chapters');
+
 const RU_PATH = path.join(SRC_PATH, 'RU');
 const UZ_PATH = path.join(SRC_PATH, 'UZ');
-const RU_UZ_PATH = path.join(__dirname, 'RU-UZ', 'chapters');
-const MK_PATH = path.join(__dirname, "MK-kito");
+
+const MK_PATH = path.join(__dirname, SRC_PATH, "MK-kito");
 
 
 const UZ_CHAPTERS_NAME = [
@@ -280,7 +282,6 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
         </body>
     </html>`;
 
-
 async function fetchChapterFromURL(url) {
     try {
         const response = await fetch(url);
@@ -321,8 +322,6 @@ async function fetchChapterFromURL(url) {
     }
 }
 
-
-
 function removeEmandSpanHTML(uzVersePath) {
     if (!fs.existsSync(uzVersePath)) {
         console.error(`Файл по пути ${uzVersePath} не найден.`);
@@ -354,89 +353,98 @@ function removeEmandSpanHTML(uzVersePath) {
 // Функция для обработки глав
 const processChapters = () => {
     // Создаем папку RU-UZ, если ее нет
-    if (!fs.existsSync(RU_UZ_PATH)) {
-        fs.mkdirSync(RU_UZ_PATH);
+    if (!fs.existsSync(DIST_PATH)) {
+        fs.mkdirSync(DIST_PATH);
     }
 
+    console.log(RU_PATH);
+
     // Считываем все главы из RU
-    const chapters = fs.readdirSync(RU_PATH).filter((item) =>
-        fs.statSync(path.join(RU_PATH, item)).isDirectory()
-    );
+    // const chapters = fs.readdirSync(RU_PATH).filter((item) =>
+    //     fs.statSync(path.join(RU_PATH, item)).isDirectory()
+    // );
 
-    for (let chapterIndex = 0; chapterIndex < chapters.length; chapterIndex++) {
-        const chapter = chapters[chapterIndex];
-        const ruChapterPath = path.join(RU_PATH, chapter);
-        const uzChapterPath = path.join(UZ_PATH, chapter);
-        const ruUzChapterPath = path.join(RU_UZ_PATH, chapter);
+    // for (let chapterIndex = 0; chapterIndex < chapters.length; chapterIndex++) {
+    //     const chapter = chapters[chapterIndex];
+    //     const ruChapterPath = path.join(RU_PATH, chapter);
+    //     const uzChapterPath = path.join(UZ_PATH, chapter);
+    //     const ruUzChapterPath = path.join(RU_UZ_PATH, chapter);
 
-        // Создаем папку для главы в RU-UZ
-        if (!fs.existsSync(ruUzChapterPath)) {
-            fs.mkdirSync(ruUzChapterPath);
-        }
+    //     // console.log(chapter, ruChapterPath);
 
-        // Обрабатываем стихи внутри главы
-        const verses = fs.readdirSync(ruChapterPath).filter((file) =>
-            file.endsWith('.html')
-        );
+    //     // // Создаем папку для главы в RU-UZ
+    //     // if (!fs.existsSync(ruUzChapterPath)) {
+    //     //     fs.mkdirSync(ruUzChapterPath);
+    //     // }
+
+    //     // // Обрабатываем стихи внутри главы
+    //     // const verses = fs.readdirSync(ruChapterPath).filter((file) =>
+    //     //     file.endsWith('.html')
+    //     // );
 
         
 
-        for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
-            const verse = verses[verseIndex];
-            const ruVersePath = path.join(ruChapterPath, verse);
-            const uzVersePath = path.join(uzChapterPath, verse);
-            const ruUzVersePath = path.join(ruUzChapterPath, verse);
-            const mkVersePath = path.join(MK_PATH, chapter, verse);
+    //     for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
+    //         // const verse = verses[verseIndex];
+    //         // const ruVersePath = path.join(ruChapterPath, verse);
+    //         // const uzVersePath = path.join(uzChapterPath, verse);
+    //         // const ruUzVersePath = path.join(ruUzChapterPath, verse);
+    //         // const mkVersePath = path.join(MK_PATH, chapter, verse);
 
-            // Проверяем, существует ли соответствующий файл в UZ
-            if (fs.existsSync(uzVersePath)) {
-                const relativeRuPath = path.relative(
-                    path.dirname(ruUzVersePath),
-                    ruVersePath
-                );
-                const relativeUzPath = path.relative(
-                    path.dirname(ruUzVersePath),
-                    uzVersePath
-                );
+    //         // console.log(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, chapterIndex, verseIndex);
 
-                const relativeMkPath = verseIndex == 0 ? null : path.relative(
-                    path.dirname(ruUzVersePath),
-                    mkVersePath
-                );
 
-                // Определяем ссылки на предыдущий и следующий стих
-                const prevLink =
-                    verseIndex > 0
-                        ? `./${verses[verseIndex - 1]}`
-                        : chapterIndex > 0
-                        ? `../${chapters[chapterIndex - 1]}/${fs
-                              .readdirSync(
-                                  path.join(RU_PATH, chapters[chapterIndex - 1])
-                              )
-                              .filter((file) => file.endsWith('.html'))
-                              .pop()}`
-                        : null;
+    //         // Проверяем, существует ли соответствующий файл в UZ
+    //         // if (fs.existsSync(uzVersePath)) {
+    //         //     const relativeRuPath = path.relative(
+    //         //         path.dirname(ruUzVersePath),
+    //         //         ruVersePath
+    //         //     );
+    //         //     const relativeUzPath = path.relative(
+    //         //         path.dirname(ruUzVersePath),
+    //         //         uzVersePath
+    //         //     );
 
-                const nextLink =
-                    verseIndex < verses.length - 1
-                        ? `./${verses[verseIndex + 1]}`
-                        : chapterIndex < chapters.length - 1
-                        ? `../${chapters[chapterIndex + 1]}/${fs
-                              .readdirSync(
-                                  path.join(RU_PATH, chapters[chapterIndex + 1])
-                              )
-                              .filter((file) => file.endsWith('.html'))[0]}`
-                        : null;
+    //         //     const relativeMkPath = verseIndex == 0 ? null : path.relative(
+    //         //         path.dirname(ruUzVersePath),
+    //         //         mkVersePath
+    //         //     );
 
-                // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, chapterIndex, verseIndex);
-                // removeEmandSpanHTML(uzVersePath)
-                fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
-            } else {
-                console.warn(`Файл отсутствует: ${uzVersePath}`);
-            }
-        }
-    }
+    //         //     // Определяем ссылки на предыдущий и следующий стих
+    //         //     const prevLink =
+    //         //         verseIndex > 0
+    //         //             ? `./${verses[verseIndex - 1]}`
+    //         //             : chapterIndex > 0
+    //         //             ? `../${chapters[chapterIndex - 1]}/${fs
+    //         //                   .readdirSync(
+    //         //                       path.join(RU_PATH, chapters[chapterIndex - 1])
+    //         //                   )
+    //         //                   .filter((file) => file.endsWith('.html'))
+    //         //                   .pop()}`
+    //         //             : null;
+
+    //         //     const nextLink =
+    //         //         verseIndex < verses.length - 1
+    //         //             ? `./${verses[verseIndex + 1]}`
+    //         //             : chapterIndex < chapters.length - 1
+    //         //             ? `../${chapters[chapterIndex + 1]}/${fs
+    //         //                   .readdirSync(
+    //         //                       path.join(RU_PATH, chapters[chapterIndex + 1])
+    //         //                   )
+    //         //                   .filter((file) => file.endsWith('.html'))[0]}`
+    //         //             : null;
+
+    //         //     // Генерируем HTML с iframe и сохраняем
+    //         //     const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, chapterIndex, verseIndex);
+    //         //     // removeEmandSpanHTML(uzVersePath)
+    //         //     // fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
+    //         // } else {
+    //         //     console.warn(`Файл отсутствует: ${uzVersePath}`);
+    //         // }
+    //         break;
+    //     }
+    //     break;
+    // }
 
     console.log('Генерация завершена!');
     // console.log('Удаление тегов завершено!');
