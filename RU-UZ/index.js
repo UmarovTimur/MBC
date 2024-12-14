@@ -120,17 +120,12 @@ function getElementByPath(doc, path) {
     }
 }
 
+// Подсветка элемента 
 function addHighlightStyle(doc) {
     const style = doc.createElement('style');
     style.textContent = `
         .highlight {
-            background-color: #FDEDB8 !important; /* Подсветка */
-        }
-        em {
-            margin: 0;
-            padding: 0;
-            border: 0px;
-            box-sizing: border-box;
+            background-color: #FDEDB8 !important; 
         }
     `;
     doc.head.appendChild(style);
