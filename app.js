@@ -11,19 +11,150 @@ const RU_UZ_PATH = path.join(DIST_PATH, 'chapters');
 const MK_PATH = path.join(SRC_PATH, "MK-kito");
 
 
-const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, verses, curChapter) {
-    let versesHtml = [];
-    let sortVerses = [];
 
-    for (let i = 0; i < verses.length; i++) {
-        sortVerses.push(+verses[i].replace(".html", ""));
-        // versesHtml.push(`<a href="./${verses[i]}" class="dropdown__chapters-item"><span>${verses[i].replace(".html", "")}</span></a>`)
-    }
+const UZ_CHAPTERS_NAME = [
+    "Ibtido",
+    "Chiqish",
+    "Levilar",
+    "Sahroda",
+    "Qonunlar",
+    "Yoshua",
+    "Hakamlar",
+    "Rut",
+    "Shohlar (birinchi kitob)",
+    "Shohlar (ikkinchi kitob)",
+    "Shohlar (uchinchi kitob)",
+    "Shohlar (to‘rtinchi kitob)",
+    "Solnomalar (birinchi kitob)",
+    "Solnomalar (ikkinchi kitob)",
+    "Ezra",
+    "Naximiyo",
+    "Ester",
+    "Ayub",
+    "Zabur",
+    "Sulaymonning hikmatlari",
+    "Voiz",
+    "Sulaymonning go‘zal qo‘shig‘i",
+    "Ishayo",
+    "Yeremiyo",
+    "Yeremiyoning marsiyasi",
+    "Hizqiyo",
+    "Doniyor",
+    "Xo‘sheya",
+    "Yo‘el",
+    "Amos",
+    "Obodiyo",
+    "Yunus",
+    "Mixo",
+    "Noxum",
+    "Xabaqquq",
+    "Zafaniyo",
+    "Xaggey",
+    "Zakariyo",
+    "Malaki",
+    "Matto Muqaddas xushxabar",
+    "Mark Muqaddas xushxabar",
+    "Luqo Muqaddas xushxabar",
+    "Yuhanno Muqaddas xushxabar",
+    "Havoriylarning faoliyati",
+    "Yoqubning maktubi",
+    "Butrusning birinchi maktubi",
+    "Butrusning ikkinchi maktubi",
+    "Yuhannoning birinchi maktubi",
+    "Yuhannoning ikkinchi maktubi",
+    "Yuhannoning uchinchi maktubi",
+    "Yahudoning maktubi",
+    "Rimliklarga maktub",
+    "Korinfliklarga birinchi maktub",
+    "Korinfliklarga ikkinchi maktub",
+    "Galatiyaliklarga maktub",
+    "Efesliklarga maktub",
+    "Filippiliklarga maktub",
+    "Kolosaliklarga maktub",
+    "Salonikaliklarga birinchi maktub",
+    "Salonikaliklarga ikkinchi maktub",
+    "Timo‘tiyga birinchi maktub",
+    "Timo‘tiyga ikkinchi maktub",
+    "Titusga maktub",
+    "Filimo‘nga maktub",
+    "Ibroniylarga maktub",
+    "Yuhannoga ko‘rsatilgan vahiy"
+]
+
+const RU_CHAPTERS_NAME = [
+    "Бытие",
+    "Исход",
+    "Левит",
+    "Числа",
+    "Второзаконие",
+    "Иисус Навин",
+    "Судьи",
+    "Руфь",
+    "1 Царств",
+    "2 Царств",
+    "3 Царств",
+    "4 Царств",
+    "1 Паралипоменон",
+    "2 Паралипоменон",
+    "Ездра",
+    "Неемия",
+    "Есфирь",
+    "Иов",
+    "Псалтирь",
+    "Притчи",
+    "Екклесиаст",
+    "Песня Песней",
+    "Исаия",
+    "Иеремия",
+    "Плач Иеремии",
+    "Иезекииль",
+    "Даниил",
+    "Осия",
+    "Иоиль",
+    "Амос",
+    "Авдий",
+    "Иона",
+    "Михей",
+    "Наум",
+    "Аввакум",
+    "Софония",
+    "Аггей",
+    "Захария",
+    "Малахия",
+    "От Матфея",
+    "От Марка",
+    "От Луки",
+    "От Иоанна",
+    "Деяния",
+    "Иакова",
+    "1 Петра",
+    "2 Петра",
+    "1 Иоанна",
+    "2 Иоанна",
+    "3 Иоанна",
+    "Иуды",
+    "Римлянам",
+    "1 Коринфянам",
+    "2 Коринфянам",
+    "Галатам",
+    "Ефесянам",
+    "Филиппийцам",
+    "Колоссянам",
+    "1 Фессалоникийцам",
+    "2 Фессалоникийцам",
+    "1 Тимофею",
+    "2 Тимофею",
+    "Титу",
+    "Филимону",
+    "Евреям",
+    "Откровение",
+]
 
 
+const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, versesHtml, curChapter) {
 
-
-
+    let chatperRU = RU_CHAPTERS_NAME[curChapter - 1];
+    let chatperUZ = UZ_CHAPTERS_NAME[curChapter - 1];
 
     return `
     <!DOCTYPE html>
@@ -44,21 +175,23 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                         ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Предыдущая глава</a>` : '<button disabled button" class="button is-link are-normal">← Предыдущая глава</button>'}
                         
                         <div class="header__row-center">
-                        <div class="dropdown">
-                            <div class="dropdown-trigger">
-                                <button class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu">
-                                    <span>Главы ↓</span>
-                                </button>
-                            </div>
-                            <div class="dropdown-menu dropdown__chapters-menu" id="dropdown-menu" role="menu">
-                                <div class="dropdown-content dropdown__chapters-row">
-                                    ${versesHtml.join("")}
+                            ${chatperRU ? `<div class="chapter-name">${chatperRU}</div>` : ""}
+                            <div class="dropdown">
+                                <div class="dropdown-trigger">
+                                    <button class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu">
+                                        <span>Главы ↓</span>
+                                    </button>
+                                </div>
+                                <div class="dropdown-menu dropdown__chapters-menu" id="dropdown-menu" role="menu">
+                                    <div class="dropdown-content dropdown__chapters-row">
+                                        ${versesHtml}
+                                    </div>
                                 </div>
                             </div>
+                            <button class="button is-link are-normal js-modal-trigger" data-target="modal-js-example" >Книги</button>
+                            ${chatperUZ ? `<div class="chapter-name">${chatperUZ}</div>` : ""}
                         </div>
-                        <a class="button is-link are-normal" href="./../../">Книги</a>
-                    </div>
-                        
+                    
                         ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Cледующая глава →</a>` : `<button disabled button" class="button is-link are-normal">Cледующая глава →</button>`}
                     </div>
                 </div>
@@ -80,88 +213,95 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                     <iframe id="chapter_iframe_uz" style="height:100%;width:100%;" src="${uzPath}" frameborder="0"></iframe>
                 </div>
             </div>
+                    <div id="modal-js-example" class="modal">
+                        <div class="modal-background"></div>
 
-            <div class="book_list">
-                <div class="container">
-                    <div class="listing">
-                        <h3 class="title">Новый Завет</h3>
-                        <div class="listing-main">
-                            <div><a href="./../40/00.html">От Матфея</a></div>
-                            <div><a href="./../41/00.html">От Марка</a></div>
-                            <div><a href="./../42/00.html">От Луки</a></div>
-                            <div><a href="./../43/00.html">От Иоанна</a></div>
-                            <div><a href="./../44/00.html">Деяния апостолов</a></div>
-                            <div><a href="./../45/00.html">Иакова</a></div>
-                            <div><a href="./../46/00.html">1 Петра</a></div>
-                            <div><a href="./../47/00.html">2 Петра</a></div>
-                            <div><a href="./../48/00.html">1 Иоанна</a></div>
-                            <div><a href="./../49/00.html">2 Иоанна</a></div>
-                            <div><a href="./../50/00.html">3 Иоанна</a></div>
-                            <div><a href="./../51/00.html">Иуды</a></div>
-                            <div><a href="./../52/00.html">Римлянам</a></div>
-                            <div><a href="./../53/00.html">1 Коринфянам</a></div>
-                            <div><a href="./../54/00.html">2 Коринфянам</a></div>
-                            <div><a href="./../55/00.html">Галатам</a></div>
-                            <div><a href="./../56/00.html">Ефесянам</a></div>
-                            <div><a href="./../57/00.html">Филиппийцам</a></div>
-                            <div><a href="./../58/00.html">Колоссянам</a></div>
-                            <div><a href="./../59/00.html">1 Фессалоникийцам</a></div>
-                            <div><a href="./../60/00.html">2 Фессалоникийцам</a></div>
-                            <div><a href="./../61/00.html">1 Тимофею</a></div>
-                            <div><a href="./../62/00.html">2 Тимофею</a></div>
-                            <div><a href="./../63/00.html">Титу</a></div>
-                            <div><a href="./../64/00.html">Филимону</a></div>
-                            <div><a href="./../65/00.html">Евреям</a></div>
-                            <div><a href="./../66/00.html">Откровение</a></div>
+                        <div class="modal-contendt">
+                            <div class="book_list">
+                                <button class="modal-close is-large" aria-label="close"></button>
+                                <div class="container">
+                                    <div class="listing">
+                                        <h3 class="title">Новый Завет</h3>
+                                        <div class="listing-main">
+                                            <div><a href="./../40/00.html">От Матфея</a></div>
+                                            <div><a href="./../41/00.html">От Марка</a></div>
+                                            <div><a href="./../42/00.html">От Луки</a></div>
+                                            <div><a href="./../43/00.html">От Иоанна</a></div>
+                                            <div><a href="./../44/00.html">Деяния апостолов</a></div>
+                                            <div><a href="./../45/00.html">Иакова</a></div>
+                                            <div><a href="./../46/00.html">1 Петра</a></div>
+                                            <div><a href="./../47/00.html">2 Петра</a></div>
+                                            <div><a href="./../48/00.html">1 Иоанна</a></div>
+                                            <div><a href="./../49/00.html">2 Иоанна</a></div>
+                                            <div><a href="./../50/00.html">3 Иоанна</a></div>
+                                            <div><a href="./../51/00.html">Иуды</a></div>
+                                            <div><a href="./../52/00.html">Римлянам</a></div>
+                                            <div><a href="./../53/00.html">1 Коринфянам</a></div>
+                                            <div><a href="./../54/00.html">2 Коринфянам</a></div>
+                                            <div><a href="./../55/00.html">Галатам</a></div>
+                                            <div><a href="./../56/00.html">Ефесянам</a></div>
+                                            <div><a href="./../57/00.html">Филиппийцам</a></div>
+                                            <div><a href="./../58/00.html">Колоссянам</a></div>
+                                            <div><a href="./../59/00.html">1 Фессалоникийцам</a></div>
+                                            <div><a href="./../60/00.html">2 Фессалоникийцам</a></div>
+                                            <div><a href="./../61/00.html">1 Тимофею</a></div>
+                                            <div><a href="./../62/00.html">2 Тимофею</a></div>
+                                            <div><a href="./../63/00.html">Титу</a></div>
+                                            <div><a href="./../64/00.html">Филимону</a></div>
+                                            <div><a href="./../65/00.html">Евреям</a></div>
+                                            <div><a href="./../66/00.html">Откровение</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="listing">
+                                        <h3 class="title">Ветхий Завет</h3>
+                                        <div class="listing-main listing-second">
+                                            <div><a href="./../01/00.html">Бытие</a></div>
+                                            <div><a href="./../02/00.html">Исход</a></div>
+                                            <div><a href="./../03/00.html">Левит</a></div>
+                                            <div><a href="./../04/00.html">Числа</a></div>
+                                            <div><a href="./../05/00.html">Второзаконие</a></div>
+                                            <div><a href="./../06/00.html">Иисус Навин</a></div>
+                                            <div><a href="./../07/00.html">Судьи</a></div>
+                                            <div><a href="./../08/00.html">Руфь</a></div>
+                                            <div><a href="./../09/00.html">1 Царств</a></div>
+                                            <div><a href="./../10/00.html">2 Царств</a></div>
+                                            <div><a href="./../11/00.html">3 Царств</a></div>
+                                            <div><a href="./../12/00.html">4 Царств</a></div>
+                                            <div><a href="./../13/00.html">1 Паралипоменон</a></div>
+                                            <div><a href="./../14/00.html">2 Паралипоменон</a></div>
+                                            <div><a href="./../15/00.html">Ездра</a></div>
+                                            <div><a href="./../16/00.html">Неемия</a></div>
+                                            <div><a href="./../17/00.html">Есфирь</a></div>
+                                            <div><a href="./../18/00.html">Иов</a></div>
+                                            <div><a href="./../19/00.html">Псалтирь</a></div>
+                                            <div><a href="./../20/00.html">Притчи</a></div>
+                                            <div><a href="./../21/00.html">Екклесиаст</a></div>
+                                            <div><a href="./../22/00.html">Песни Песней</a></div>
+                                            <div><a href="./../23/00.html">Исаия</a></div>
+                                            <div><a href="./../24/00.html">Иеремия</a></div>
+                                            <div><a href="./../25/00.html">Плач Иеремии</a></div>
+                                            <div><a href="./../26/00.html">Иезекииль</a></div>
+                                            <div><a href="./../27/00.html">Даниил</a></div>
+                                            <div><a href="./../28/00.html">Осия</a></div>
+                                            <div><a href="./../29/00.html">Иоиль</a></div>
+                                            <div><a href="./../30/00.html">Амос</a></div>
+                                            <div><a href="./../31/00.html">Авдий</a></div>
+                                            <div><a href="./../32/00.html">Иона</a></div>
+                                            <div><a href="./../33/00.html">Михей</a></div>
+                                            <div><a href="./../34/00.html">Наум</a></div>
+                                            <div><a href="./../35/00.html">Аввакум</a></div>
+                                            <div><a href="./../36/00.html">Софония</a></div>
+                                            <div><a href="./../37/00.html">Аггей</a></div>
+                                            <div><a href="./../38/00.html">Захария</a></div>
+                                            <div><a href="./../39/00.html">Малахия</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="listing">
-                        <h3 class="title">Ветхий Завет</h3>
-                        <div class="listing-main listing-second">
-                            <div><a href="./../01/00.html">Бытие</a></div>
-                            <div><a href="./../02/00.html">Исход</a></div>
-                            <div><a href="./../03/00.html">Левит</a></div>
-                            <div><a href="./../04/00.html">Числа</a></div>
-                            <div><a href="./../05/00.html">Второзаконие</a></div>
-                            <div><a href="./../06/00.html">Иисус Навин</a></div>
-                            <div><a href="./../07/00.html">Судьи</a></div>
-                            <div><a href="./../08/00.html">Руфь</a></div>
-                            <div><a href="./../09/00.html">1 Царств</a></div>
-                            <div><a href="./../10/00.html">2 Царств</a></div>
-                            <div><a href="./../11/00.html">3 Царств</a></div>
-                            <div><a href="./../12/00.html">4 Царств</a></div>
-                            <div><a href="./../13/00.html">1 Паралипоменон</a></div>
-                            <div><a href="./../14/00.html">2 Паралипоменон</a></div>
-                            <div><a href="./../15/00.html">Ездра</a></div>
-                            <div><a href="./../16/00.html">Неемия</a></div>
-                            <div><a href="./../17/00.html">Есфирь</a></div>
-                            <div><a href="./../18/00.html">Иов</a></div>
-                            <div><a href="./../19/00.html">Псалтирь</a></div>
-                            <div><a href="./../20/00.html">Притчи</a></div>
-                            <div><a href="./../21/00.html">Екклесиаст</a></div>
-                            <div><a href="./../22/00.html">Песни Песней</a></div>
-                            <div><a href="./../23/00.html">Исаия</a></div>
-                            <div><a href="./../24/00.html">Иеремия</a></div>
-                            <div><a href="./../25/00.html">Плач Иеремии</a></div>
-                            <div><a href="./../26/00.html">Иезекииль</a></div>
-                            <div><a href="./../27/00.html">Даниил</a></div>
-                            <div><a href="./../28/00.html">Осия</a></div>
-                            <div><a href="./../29/00.html">Иоиль</a></div>
-                            <div><a href="./../30/00.html">Амос</a></div>
-                            <div><a href="./../31/00.html">Авдий</a></div>
-                            <div><a href="./../32/00.html">Иона</a></div>
-                            <div><a href="./../33/00.html">Михей</a></div>
-                            <div><a href="./../34/00.html">Наум</a></div>
-                            <div><a href="./../35/00.html">Аввакум</a></div>
-                            <div><a href="./../36/00.html">Софония</a></div>
-                            <div><a href="./../37/00.html">Аггей</a></div>
-                            <div><a href="./../38/00.html">Захария</a></div>
-                            <div><a href="./../39/00.html">Малахия</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div><div class="book_list">
-            </div>
+
+            
             <div class="container">
                 <h1 class="title is-3 has-text-centered" >Комментарии к библии МакДональда на Узбекском языке.</h1>
                 <h2 class="title is-3 has-text-centered" >MakDonald Injiliga o'zbek tilida sharhlar.</h2>
@@ -268,10 +408,39 @@ const processChapters = () => {
             fs.mkdirSync(ruUzChapterPath);
         }
 
+
+
+
+
+
+
         // Обрабатываем стихи внутри главы
         const verses = fs.readdirSync(ruChapterPath).filter((file) =>
             file.endsWith('.html')
         );
+
+
+        // Генерация выпадающего списка глав
+        let versesHtml = [];
+        let sortVerses = [];
+        let versesName = [];
+
+        verses.forEach(verse => sortVerses.push(+verse.replace(".html", "")));
+
+        sortVerses.sort((a, b) => a - b);
+
+        for (let i = 0; i < sortVerses.length; i++) {
+            if (i < 10) {
+                versesName.push("0" + sortVerses[i] + ".html");
+            } else {
+                versesName.push(sortVerses[i] + ".html");
+            }
+        }
+
+        for (let j = 0; j < sortVerses.length; j++) {
+            versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item"><span>${sortVerses[j]}</span></a>`);
+        }
+
 
         for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
             const verse = verses[verseIndex];
@@ -321,7 +490,7 @@ const processChapters = () => {
                             : null;
 
                 // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, verses, chapter);
+                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, versesHtml.join(""), chapter);
                 // removeEmandSpanHTML(uzVersePath)
                 fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
             } else {

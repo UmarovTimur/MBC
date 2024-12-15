@@ -106,6 +106,15 @@ body>div {
     justify-content: space-between;
 }
 
+.header__row-center {
+    display: flex;
+    column-gap: 15px;
+}
+
+.chapter-name {
+    line-height: 40px;
+}
+
 
 /* ========================== DROPDOWN ============================================= */
 
@@ -137,6 +146,10 @@ body>div {
     padding-inline: 0px !important;
     color: rgba(000, 000, 000, 0.7);
 }
+
+
+
+
 
 .wrapper {
     width: 100vw;
@@ -193,8 +206,27 @@ h2 {
 .prev_next__links a {}
 
 /* ============================================================== */
+.modal-contendt {
+    background-color: white;
+    position: relative;
+    z-index: 48;
+    padding: 20px 80px 5px 80px;
+}
+
+.modal-background {
+    background-color: rgba(000, 000, 000, 0.3);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(000, 000, 000, .8);
+}
+
 .book_list {
     padding-bottom: 40px;
+
 }
 
 .listing {
