@@ -11,7 +11,7 @@ iframeRU.onload = function () {
 
         iframeMkBook.onload = function () {
             iframeMkBook.style.height = iframeMkBook.contentWindow.document.body.scrollHeight + 'px';
-            iframeMkBook.contentWindow.document .addEventListener('click', function (event) {
+            iframeMkBook.contentWindow.document.addEventListener('click', function (event) {
                 if (event.target.tagName === 'A') {
                     event.preventDefault();
                     const url = event.target.href;
@@ -19,7 +19,7 @@ iframeRU.onload = function () {
                 }
             });
         }
-        
+
     };
 };
 
@@ -58,7 +58,7 @@ function attachHoverHandler(iframe1, iframe2) {
             setTimeout(() => {
                 unhighlightElement(element);
                 unhighlightElement(matchingElement);
-            },10);
+            }, 10);
         }
     });
 }
@@ -86,8 +86,6 @@ function findMatchingElementByIndex(iframe2Doc, elementIndex) {
     }
     return null; // Если индекс выходит за пределы
 }
-
-
 
 // Получить путь элемента в DOM
 function getElementPath(element) {
