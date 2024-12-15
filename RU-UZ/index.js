@@ -3,25 +3,103 @@ const iframeUZ = document.getElementById('chapter_iframe_uz');
 const iframeBookList = document.getElementById('book_list');
 const iframeMkBook = document.getElementById('mk_book_iframe');
 
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.dropdown-trigger');
+
+        trigger.addEventListener('click', () => {
+            dropdown.classList.toggle('is-active');
+            document.querySelector("._curtain-for-clicking").classList.toggle('is-active');
+        });
+    });
+    document.addEventListener('click', (e) => {
+        dropdowns.forEach(dropdown => {
+            if (!dropdown.contains(e.target) && dropdown.classList.contains("is-active")) {
+                dropdown.classList.remove('is-active');
+                document.querySelector("._curtain-for-clicking").classList.remove('is-active');
+            }
+        });
+    });
+
+
+
+    // ========================================== MODAL
+    // Functions to open and close a modal
+    function openModal($el) {
+        $el.classList.add('is-active');
+    }
+
+    function closeModal($el) {
+        $el.classList.remove('is-active');
+    }
+
+    function closeAllModals() {
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+            closeModal($modal);
+        });
+    }
+
+    // Add a click event on buttons to open a specific modal
+    (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+        const modal = $trigger.dataset.target;
+        const $target = document.getElementById(modal);
+
+        $trigger.addEventListener('click', () => {
+            openModal($target);
+        });
+    });
+
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+        const $target = $close.closest('.modal');
+
+        $close.addEventListener('click', () => {
+            closeModal($target);
+        });
+    });
+
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+        if (event.key === "Escape") {
+            closeAllModals();
+        }
+    });
+    // ==========================================
+
+    let dataActiveChapter = document.querySelector("[data-active-chapter]");
+    let absoluteId = +dataActiveChapter.getAttribute("data-active-chapter");
+    let bookIndex = absoluteId <= 27 ? absoluteId + 39 : absoluteId - 27;
+    console.log(absoluteId);
+    dataActiveChapter.querySelectorAll("a")[absoluteId - 1].classList.add("is-active");
+
+    // data-active-chapter
+});
+
+
+
+
 iframeRU.onload = function () {
     iframeRU.style.height = iframeRU.contentWindow.document.body.scrollHeight + 'px';
-    iframeUZ.onload = function () {
-        iframeUZ.style.height = iframeUZ.contentWindow.document.body.scrollHeight + 'px';
-        attachHoverHandler(iframeRU, iframeUZ);
-
-        iframeMkBook.onload = function () {
-            iframeMkBook.style.height = iframeMkBook.contentWindow.document.body.scrollHeight + 'px';
-            iframeMkBook.contentWindow.document .addEventListener('click', function (event) {
-                if (event.target.tagName === 'A') {
-                    event.preventDefault();
-                    const url = event.target.href;
-                    window.top.location.href = url;
-                }
-            });
-        }
-        
-    };
 };
+iframeUZ.onload = function () {
+    iframeUZ.style.height = iframeUZ.contentWindow.document.body.scrollHeight + 'px';
+    attachHoverHandler(iframeRU, iframeUZ);
+};
+
+if (iframeMkBook) {
+    iframeMkBook.onload = function () {
+        iframeMkBook.style.height = iframeMkBook.contentWindow.document.body.scrollHeight + 'px';
+        iframeMkBook.contentWindow.document.addEventListener('click', function (event) {
+            if (event.target.tagName === 'A') {
+                event.preventDefault();
+                const url = event.target.href;
+                window.top.location.href = url;
+            }
+        });
+    }
+}
 
 function attachHoverHandler(iframe1, iframe2) {
     const doc1 = iframe1.contentWindow.document;
@@ -58,7 +136,7 @@ function attachHoverHandler(iframe1, iframe2) {
             setTimeout(() => {
                 unhighlightElement(element);
                 unhighlightElement(matchingElement);
-            },10);
+            }, 10);
         }
     });
 }
@@ -86,8 +164,6 @@ function findMatchingElementByIndex(iframe2Doc, elementIndex) {
     }
     return null; // Если индекс выходит за пределы
 }
-
-
 
 // Получить путь элемента в DOM
 function getElementPath(element) {
