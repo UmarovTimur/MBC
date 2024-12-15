@@ -188,7 +188,7 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                                     </div>
                                 </div>
                             </div>
-                            <button class="button is-link are-normal js-modal-trigger" data-target="modal-js-example" >Книги</button>
+                            <button class="button is-link are-normal js-modal-trigger" data-target="modal-js-example" >Книги ↓</button>
                             ${chatperUZ ? `<div class="chapter-name">${chatperUZ}</div>` : ""}
                         </div>
                     
@@ -217,41 +217,9 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                         <div class="modal-background"></div>
 
                         <div class="modal-contendt">
-                            <div class="book_list">
+                            <div data-active-chapter="${+curChapter}" class="book_list">
                                 <button class="modal-close is-large" aria-label="close"></button>
                                 <div class="container">
-                                    <div class="listing">
-                                        <h3 class="title">Новый Завет</h3>
-                                        <div class="listing-main">
-                                            <div><a href="./../40/00.html">От Матфея</a></div>
-                                            <div><a href="./../41/00.html">От Марка</a></div>
-                                            <div><a href="./../42/00.html">От Луки</a></div>
-                                            <div><a href="./../43/00.html">От Иоанна</a></div>
-                                            <div><a href="./../44/00.html">Деяния апостолов</a></div>
-                                            <div><a href="./../45/00.html">Иакова</a></div>
-                                            <div><a href="./../46/00.html">1 Петра</a></div>
-                                            <div><a href="./../47/00.html">2 Петра</a></div>
-                                            <div><a href="./../48/00.html">1 Иоанна</a></div>
-                                            <div><a href="./../49/00.html">2 Иоанна</a></div>
-                                            <div><a href="./../50/00.html">3 Иоанна</a></div>
-                                            <div><a href="./../51/00.html">Иуды</a></div>
-                                            <div><a href="./../52/00.html">Римлянам</a></div>
-                                            <div><a href="./../53/00.html">1 Коринфянам</a></div>
-                                            <div><a href="./../54/00.html">2 Коринфянам</a></div>
-                                            <div><a href="./../55/00.html">Галатам</a></div>
-                                            <div><a href="./../56/00.html">Ефесянам</a></div>
-                                            <div><a href="./../57/00.html">Филиппийцам</a></div>
-                                            <div><a href="./../58/00.html">Колоссянам</a></div>
-                                            <div><a href="./../59/00.html">1 Фессалоникийцам</a></div>
-                                            <div><a href="./../60/00.html">2 Фессалоникийцам</a></div>
-                                            <div><a href="./../61/00.html">1 Тимофею</a></div>
-                                            <div><a href="./../62/00.html">2 Тимофею</a></div>
-                                            <div><a href="./../63/00.html">Титу</a></div>
-                                            <div><a href="./../64/00.html">Филимону</a></div>
-                                            <div><a href="./../65/00.html">Евреям</a></div>
-                                            <div><a href="./../66/00.html">Откровение</a></div>
-                                        </div>
-                                    </div>
                                     <div class="listing">
                                         <h3 class="title">Ветхий Завет</h3>
                                         <div class="listing-main listing-second">
@@ -294,6 +262,38 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                                             <div><a href="./../37/00.html">Аггей</a></div>
                                             <div><a href="./../38/00.html">Захария</a></div>
                                             <div><a href="./../39/00.html">Малахия</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="listing">
+                                        <h3 class="title">Новый Завет</h3>
+                                        <div class="listing-main">
+                                            <div><a href="./../40/00.html">От Матфея</a></div>
+                                            <div><a href="./../41/00.html">От Марка</a></div>
+                                            <div><a href="./../42/00.html">От Луки</a></div>
+                                            <div><a href="./../43/00.html">От Иоанна</a></div>
+                                            <div><a href="./../44/00.html">Деяния апостолов</a></div>
+                                            <div><a href="./../45/00.html">Иакова</a></div>
+                                            <div><a href="./../46/00.html">1 Петра</a></div>
+                                            <div><a href="./../47/00.html">2 Петра</a></div>
+                                            <div><a href="./../48/00.html">1 Иоанна</a></div>
+                                            <div><a href="./../49/00.html">2 Иоанна</a></div>
+                                            <div><a href="./../50/00.html">3 Иоанна</a></div>
+                                            <div><a href="./../51/00.html">Иуды</a></div>
+                                            <div><a href="./../52/00.html">Римлянам</a></div>
+                                            <div><a href="./../53/00.html">1 Коринфянам</a></div>
+                                            <div><a href="./../54/00.html">2 Коринфянам</a></div>
+                                            <div><a href="./../55/00.html">Галатам</a></div>
+                                            <div><a href="./../56/00.html">Ефесянам</a></div>
+                                            <div><a href="./../57/00.html">Филиппийцам</a></div>
+                                            <div><a href="./../58/00.html">Колоссянам</a></div>
+                                            <div><a href="./../59/00.html">1 Фессалоникийцам</a></div>
+                                            <div><a href="./../60/00.html">2 Фессалоникийцам</a></div>
+                                            <div><a href="./../61/00.html">1 Тимофею</a></div>
+                                            <div><a href="./../62/00.html">2 Тимофею</a></div>
+                                            <div><a href="./../63/00.html">Титу</a></div>
+                                            <div><a href="./../64/00.html">Филимону</a></div>
+                                            <div><a href="./../65/00.html">Евреям</a></div>
+                                            <div><a href="./../66/00.html">Откровение</a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -409,11 +409,6 @@ const processChapters = () => {
         }
 
 
-
-
-
-
-
         // Обрабатываем стихи внутри главы
         const verses = fs.readdirSync(ruChapterPath).filter((file) =>
             file.endsWith('.html')
@@ -421,25 +416,9 @@ const processChapters = () => {
 
 
         // Генерация выпадающего списка глав
-        let versesHtml = [];
-        let sortVerses = [];
-        let versesName = [];
 
-        verses.forEach(verse => sortVerses.push(+verse.replace(".html", "")));
 
-        sortVerses.sort((a, b) => a - b);
 
-        for (let i = 0; i < sortVerses.length; i++) {
-            if (i < 10) {
-                versesName.push("0" + sortVerses[i] + ".html");
-            } else {
-                versesName.push(sortVerses[i] + ".html");
-            }
-        }
-
-        for (let j = 0; j < sortVerses.length; j++) {
-            versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item"><span>${sortVerses[j]}</span></a>`);
-        }
 
 
         for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
@@ -448,6 +427,32 @@ const processChapters = () => {
             const uzVersePath = path.join(uzChapterPath, verse);
             const ruUzVersePath = path.join(ruUzChapterPath, verse);
             const mkVersePath = path.join(MK_PATH, chapter, verse);
+
+            let versesHtml = [];
+            let sortVerses = [];
+            let versesName = [];
+
+            // =========================================================================== ГЕНЕРАЦИЯ ГЛАВ
+            verses.forEach(verse => sortVerses.push(+verse.replace(".html", "")));
+
+            sortVerses.sort((a, b) => a - b);
+
+            for (let i = 0; i < sortVerses.length; i++) {
+                if (i < 10) {
+                    versesName.push("0" + sortVerses[i] + ".html");
+                } else {
+                    versesName.push(sortVerses[i] + ".html");
+                }
+            }
+
+            for (let j = 0; j < sortVerses.length; j++) {
+                if (j == verseIndex) {
+                    versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item is-active"><span>${sortVerses[j]}</span></a>`);
+                } else {
+                    versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item"><span>${sortVerses[j]}</span></a>`);
+                }
+            }
+            // ===========================================================================
 
             // Проверяем, существует ли соответствующий файл в UZ
             if (fs.existsSync(uzVersePath)) {

@@ -67,6 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     // ==========================================
+
+    let dataActiveChapter = document.querySelector("[data-active-chapter]");
+    let absoluteId = +dataActiveChapter.getAttribute("data-active-chapter");
+    let bookIndex = absoluteId <= 27 ? absoluteId + 39 : absoluteId - 27;
+    console.log(absoluteId);
+    dataActiveChapter.querySelectorAll("a")[absoluteId - 1].classList.add("is-active");
+
+    // data-active-chapter
 });
 
 
