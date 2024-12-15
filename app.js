@@ -4,10 +4,11 @@ const { JSDOM } = require("jsdom");
 const beautify = require("js-beautify").html;
 
 const SRC_PATH = path.join(__dirname, 'src');
+const DIST_PATH = path.join(__dirname, "RU-UZ")
 const RU_PATH = path.join(SRC_PATH, 'RU');
 const UZ_PATH = path.join(SRC_PATH, 'UZ');
-const RU_UZ_PATH = path.join(__dirname, 'RU-UZ', 'chapters');
-const MK_PATH = path.join(__dirname, "MK-kito");
+const RU_UZ_PATH = path.join(DIST_PATH, 'chapters');
+const MK_PATH = path.join(SRC_PATH, "MK-kito");
 
 
 const UZ_CHAPTERS_NAME = [
@@ -148,7 +149,7 @@ const RU_CHAPTERS_NAME = [
     "Откровение",
 ]
 
-const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterIndex, verseIndex) => `
+const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink) => `
     <!DOCTYPE html>
     <html data-theme=light lang="uz">
     <head>
@@ -164,9 +165,9 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink, chapterInd
             <header class="header">
                 <div class="header__content">
                     <div class="header__row">
-                        ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Previous</a>`: '<button disabled button" class="button is-link are-normal">← Previous</button>' }
+                        ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Previous</a>` : '<button disabled button" class="button is-link are-normal">← Previous</button>'}
                         <a class="button is-link are-normal" href="../../">MBC</a>
-                        ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Next →</a>`: `<button disabled button" class="button is-link are-normal">Next →</button>` }
+                        ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Next →</a>` : `<button disabled button" class="button is-link are-normal">Next →</button>`}
                     </div>
                 </div>
             </header>
@@ -379,7 +380,7 @@ const processChapters = () => {
             file.endsWith('.html')
         );
 
-        
+
 
         for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
             const verse = verses[verseIndex];
@@ -409,27 +410,27 @@ const processChapters = () => {
                     verseIndex > 0
                         ? `./${verses[verseIndex - 1]}`
                         : chapterIndex > 0
-                        ? `../${chapters[chapterIndex - 1]}/${fs
-                              .readdirSync(
-                                  path.join(RU_PATH, chapters[chapterIndex - 1])
-                              )
-                              .filter((file) => file.endsWith('.html'))
-                              .pop()}`
-                        : null;
+                            ? `../${chapters[chapterIndex - 1]}/${fs
+                                .readdirSync(
+                                    path.join(RU_PATH, chapters[chapterIndex - 1])
+                                )
+                                .filter((file) => file.endsWith('.html'))
+                                .pop()}`
+                            : null;
 
                 const nextLink =
                     verseIndex < verses.length - 1
                         ? `./${verses[verseIndex + 1]}`
                         : chapterIndex < chapters.length - 1
-                        ? `../${chapters[chapterIndex + 1]}/${fs
-                              .readdirSync(
-                                  path.join(RU_PATH, chapters[chapterIndex + 1])
-                              )
-                              .filter((file) => file.endsWith('.html'))[0]}`
-                        : null;
+                            ? `../${chapters[chapterIndex + 1]}/${fs
+                                .readdirSync(
+                                    path.join(RU_PATH, chapters[chapterIndex + 1])
+                                )
+                                .filter((file) => file.endsWith('.html'))[0]}`
+                            : null;
 
                 // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, chapterIndex, verseIndex);
+                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink);
                 // removeEmandSpanHTML(uzVersePath)
                 fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
             } else {
@@ -470,16 +471,16 @@ const loadMK = () => {
             const distVerse = path.join(MK_PATH, chapter, verse);
 
             if (fs.existsSync(distVerse)) continue;
-            
+
             // Пример использования
             fetchChapterFromURL(versePath)
-            .then(element => {
-                if (element) {
-                    fs.writeFileSync(distVerse, element, 'utf8');
-                } else {
-                    console.log('Элемент не найден.');
-                }
-            });
+                .then(element => {
+                    if (element) {
+                        fs.writeFileSync(distVerse, element, 'utf8');
+                    } else {
+                        console.log('Элемент не найден.');
+                    }
+                });
         }
     }
 };
