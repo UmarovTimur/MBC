@@ -11,7 +11,21 @@ const RU_UZ_PATH = path.join(DIST_PATH, 'chapters');
 const MK_PATH = path.join(SRC_PATH, "MK-kito");
 
 
-const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink) => `
+const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, verses, curChapter) {
+    let versesHtml = [];
+    let sortVerses = [];
+
+    for (let i = 0; i < verses.length; i++) {
+        sortVerses.push(+verses[i].replace(".html", ""));
+        // versesHtml.push(`<a href="./${verses[i]}" class="dropdown__chapters-item"><span>${verses[i].replace(".html", "")}</span></a>`)
+    }
+
+
+
+
+
+
+    return `
     <!DOCTYPE html>
     <html data-theme=light lang="uz">
     <head>
@@ -23,13 +37,29 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink) => `
     </head>
     <body>
         <div class="wrapper">
-
+            <div class="_curtain-for-clicking"></div>
             <header class="header">
                 <div class="header__content">
                     <div class="header__row">
-                        ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Previous</a>` : '<button disabled button" class="button is-link are-normal">← Previous</button>'}
-                        <a class="button is-link are-normal" href="../../">MBC</a>
-                        ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Next →</a>` : `<button disabled button" class="button is-link are-normal">Next →</button>`}
+                        ${prevLink ? `<a class="button is-link are-normal" href="${prevLink}">← Предыдущая глава</a>` : '<button disabled button" class="button is-link are-normal">← Предыдущая глава</button>'}
+                        
+                        <div class="header__row-center">
+                        <div class="dropdown">
+                            <div class="dropdown-trigger">
+                                <button class="button is-link" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span>Главы ↓</span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu dropdown__chapters-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content dropdown__chapters-row">
+                                    ${versesHtml.join("")}
+                                </div>
+                            </div>
+                        </div>
+                        <a class="button is-link are-normal" href="./../../">Книги</a>
+                    </div>
+                        
+                        ${nextLink ? `<a class="button is-link are-normal" href="${nextLink}">Cледующая глава →</a>` : `<button disabled button" class="button is-link are-normal">Cледующая глава →</button>`}
                     </div>
                 </div>
             </header>
@@ -142,6 +172,7 @@ const createIFrameHTML = (ruPath, uzPath, mkPath, prevLink, nextLink) => `
         <script src="../../index.js"></script>
         </body>
     </html>`;
+}
 
 
 async function fetchChapterFromURL(url) {
@@ -242,8 +273,6 @@ const processChapters = () => {
             file.endsWith('.html')
         );
 
-
-
         for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
             const verse = verses[verseIndex];
             const ruVersePath = path.join(ruChapterPath, verse);
@@ -292,7 +321,7 @@ const processChapters = () => {
                             : null;
 
                 // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink);
+                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, verses, chapter);
                 // removeEmandSpanHTML(uzVersePath)
                 fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
             } else {
