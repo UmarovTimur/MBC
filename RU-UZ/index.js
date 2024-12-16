@@ -6,11 +6,17 @@ const iframeMkBook = document.getElementById('mk_book_iframe');
 document.addEventListener('DOMContentLoaded', () => {
     let dataActiveChapter = document.querySelector("[data-active-chapter]");
     let bookOrder = +dataActiveChapter.getAttribute("data-active-chapter");
-    console.log(bookOrder);
+
     let activeChapter = dataActiveChapter.querySelectorAll("a")[bookOrder - 1];
     activeChapter.classList.add("is-active");
 
-    // document.title = 
+
+    let dataActiveVerse = document.querySelector("[data-active-verse]");
+    let verseOrder = +dataActiveVerse.getAttribute("data-active-verse");
+
+
+    let activeVerse = dataActiveVerse.querySelectorAll("a")[verseOrder];
+    activeVerse.classList.add("is-active");
 
 });
 
@@ -557,7 +563,7 @@ class Popup {
     }
     // Функция вывода в консоль
     popupLogging(message) {
-        this.options.logging ? console.log(`[Попапос]: ${message}`) : null;
+        // this.options.logging ? console.log(`[Попапос]: ${message}`) : null;
     }
 }
 // Запускаем и добавляем в объект модулей

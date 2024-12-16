@@ -151,7 +151,7 @@ const RU_CHAPTERS_NAME = [
 ]
 
 
-const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, versesHtml, curChapter) {
+const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, versesHtml, curChapter, curVerse) {
 
     let chapterOrder = +path.basename(ruPath).replace(".html", "");
     let ruPostFix = chapterOrder == 0 ? "Введение" : chapterOrder;
@@ -213,7 +213,7 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
                 <div data-close class="modal-background"></div>
                 <div class="modal-contendt">
                     <div class="dropdown__chapters-menu" >
-                        <div class="dropdown__chapters-row">
+                        <div data-active-verse="${curVerse}" class="dropdown__chapters-row">
                             ${versesHtml}
                         </div>
                     </div>
@@ -420,11 +420,19 @@ const processChapters = () => {
         );
 
 
-        // Генерация выпадающего списка глав
 
+        // ============================== ГЕНЕРАЦИЯ ГЛАВ
+        // Генерация списка глав
+        let versesHtml = [];
+        const sortedVers = verses.sort((a, b) => {
+            const numA = parseInt(a.split('.')[0], 10);
+            const numB = parseInt(b.split('.')[0], 10);
+            return numA - numB;
+        });
 
-
-
+        for (let j = 0; j < sortedVers.length; j++) {
+            versesHtml.push(`<a href="./${sortedVers[j]}" class="dropdown__chapters-item"><span>${j}</span></a>`);
+        }
 
         for (let verseIndex = 0; verseIndex < verses.length; verseIndex++) {
             const verse = verses[verseIndex];
@@ -433,30 +441,7 @@ const processChapters = () => {
             const ruUzVersePath = path.join(ruUzChapterPath, verse);
             const mkVersePath = path.join(MK_PATH, chapter, verse);
 
-            let versesHtml = [];
-            let sortVerses = [];
-            let versesName = [];
 
-            // =========================================================================== ГЕНЕРАЦИЯ ГЛАВ
-            verses.forEach(verse => sortVerses.push(+verse.replace(".html", "")));
-
-            sortVerses.sort((a, b) => a - b);
-
-            for (let i = 0; i < sortVerses.length; i++) {
-                if (i < 10) {
-                    versesName.push("0" + sortVerses[i] + ".html");
-                } else {
-                    versesName.push(sortVerses[i] + ".html");
-                }
-            }
-
-            for (let j = 0; j < sortVerses.length; j++) {
-                if (j == verseIndex) {
-                    versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item is-active"><span>${sortVerses[j]}</span></a>`);
-                } else {
-                    versesHtml.push(`<a href="./${versesName[j]}" class="dropdown__chapters-item"><span>${sortVerses[j]}</span></a>`);
-                }
-            }
             // ===========================================================================
 
             // Проверяем, существует ли соответствующий файл в UZ
@@ -500,7 +485,7 @@ const processChapters = () => {
                             : null;
 
                 // Генерируем HTML с iframe и сохраняем
-                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, versesHtml.join(""), chapter);
+                const combinedHTML = createIFrameHTML(relativeRuPath, relativeUzPath, relativeMkPath, prevLink, nextLink, versesHtml.join(""), chapter, verseIndex);
                 // removeEmandSpanHTML(uzVersePath)
                 fs.writeFileSync(ruUzVersePath, combinedHTML, 'utf8');
             } else {
