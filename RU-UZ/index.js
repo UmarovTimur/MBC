@@ -7,7 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let dataActiveChapter = document.querySelector("[data-active-chapter]");
     let bookOrder = +dataActiveChapter.getAttribute("data-active-chapter");
     console.log(bookOrder);
-    dataActiveChapter.querySelectorAll("a")[bookOrder - 1].classList.add("is-active");
+    let activeChapter = dataActiveChapter.querySelectorAll("a")[bookOrder - 1];
+    activeChapter.classList.add("is-active");
+
+    // document.title = 
+
 });
 
 

@@ -153,8 +153,11 @@ const RU_CHAPTERS_NAME = [
 
 const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, versesHtml, curChapter) {
 
-    let chatperRU = RU_CHAPTERS_NAME[curChapter - 1];
-    let chatperUZ = UZ_CHAPTERS_NAME[curChapter - 1];
+    let chapterOrder = +path.basename(ruPath).replace(".html", "");
+    let ruPostFix = chapterOrder == 0 ? "Введение" : chapterOrder;
+    let uzPostFix = chapterOrder == 0 ? "Kirish" : chapterOrder;
+    let chatperRU = RU_CHAPTERS_NAME[curChapter - 1] + ": " + ruPostFix;
+    let chatperUZ = UZ_CHAPTERS_NAME[curChapter - 1] + ": " + uzPostFix;
 
     return `
     <!DOCTYPE html>
@@ -164,7 +167,7 @@ const createIFrameHTML = function (ruPath, uzPath, mkPath, prevLink, nextLink, v
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../../bulma.min.css">
         <link rel="stylesheet" href="../../style.css">
-        <title>${path.basename(ruPath)}</title>
+        <title>${chatperRU}</title>
     </head>
     <body>
         <div class="wrapper">
