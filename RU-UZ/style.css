@@ -126,13 +126,14 @@ body>div {
     display: flex;
     flex-wrap: wrap;
     min-width: 100px !important;
+    padding-bottom: 15px;
 }
 
 .dropdown__chapters-item {
     border: solid 1px rgba(000, 000, 000, 0.1);
-    flex: 0 0 50px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    flex: 0 0 70px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     text-align: center;
     transition: all 0.5s ease 0s;
 }
@@ -144,6 +145,7 @@ body>div {
 .dropdown__chapters-item>span {
     padding-inline: 0px !important;
     color: rgba(000, 000, 000, 0.7);
+    font-size: 18px;
 }
 
 .dropdown__chapters-item.is-active {
@@ -163,6 +165,11 @@ body>div {
     overflow-x: hidden;
     overflow-y: scroll;
     padding-top: 75px;
+    min-width: 1024px;
+}
+
+.popup-show>.wrapper {
+    overflow: hidden;
 }
 
 .container {
@@ -211,6 +218,16 @@ h2 {
 .prev_next__links a {}
 
 /* ============================================================== */
+.modal {
+    top: 0;
+    left: 0;
+    position: fixed;
+    overflow: hidden;
+    z-index: 60;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
 .modal-contendt {
     background-color: white;
     position: relative;
@@ -255,6 +272,8 @@ h2 {
     column-gap: 50px;
 }
 
+
+
 .listing-main.listing-second {
     grid-template: repeat(8, 1fr) / repeat(3, minmax(150px, 1fr));
 }
@@ -273,4 +292,17 @@ h2 {
 
 .listing-main a:hover {
     color: #ff9900;
+}
+
+
+@media screen and (max-width:1140px) {
+    .listing-main {
+        grid-template: repeat(6, 1fr) / repeat(3, minmax(100px, 1fr));
+        column-gap: 20px;
+    }
+
+    .listing-main a {
+        font-size: 16px;
+
+    }
 }
