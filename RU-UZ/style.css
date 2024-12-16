@@ -126,13 +126,14 @@ body>div {
     display: flex;
     flex-wrap: wrap;
     min-width: 100px !important;
+    padding-bottom: 15px;
 }
 
 .dropdown__chapters-item {
     border: solid 1px rgba(000, 000, 000, 0.1);
-    flex: 0 0 50px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    flex: 0 0 70px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     text-align: center;
     transition: all 0.5s ease 0s;
 }
@@ -144,6 +145,7 @@ body>div {
 .dropdown__chapters-item>span {
     padding-inline: 0px !important;
     color: rgba(000, 000, 000, 0.7);
+    font-size: 18px;
 }
 
 .dropdown__chapters-item.is-active {
@@ -163,6 +165,10 @@ body>div {
     overflow-x: hidden;
     overflow-y: scroll;
     padding-top: 75px;
+}
+
+.popup-show>.wrapper {
+    overflow: hidden;
 }
 
 .container {
@@ -211,6 +217,13 @@ h2 {
 .prev_next__links a {}
 
 /* ============================================================== */
+.modal {
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+    z-index: 60;
+}
+
 .modal-contendt {
     background-color: white;
     position: relative;
