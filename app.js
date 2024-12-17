@@ -1,3 +1,15 @@
+const fs = require('fs');
+const path = require('path');
+const { JSDOM } = require("jsdom");
+const beautify = require("js-beautify").html;
+
+const SRC_PATH = path.join(__dirname, 'src');
+const DIST_PATH = path.join(__dirname, "RU-UZ")
+const RU_PATH = path.join(SRC_PATH, 'RU');
+const UZ_PATH = path.join(SRC_PATH, 'UZ');
+const RU_UZ_PATH = path.join(DIST_PATH, 'chapters');
+const MK_PATH = path.join(SRC_PATH, "MK-kito");
+
 const UZ_CHAPTERS_NAME = [
     "Ibtido",
     "Chiqish",
@@ -135,3 +147,4 @@ const RU_CHAPTERS_NAME = [
     "Евреям",
     "Откровение",
 ]
+
