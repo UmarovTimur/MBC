@@ -25,10 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 iframeRU.onload = function () {
     iframeRU.style.height = iframeRU.contentWindow.document.body.scrollHeight + 'px';
-};
-iframeUZ.onload = function () {
-    iframeUZ.style.height = iframeUZ.contentWindow.document.body.scrollHeight + 'px';
-    attachHoverHandler(iframeRU, iframeUZ);
+    iframeUZ.onload = function () {
+        iframeUZ.style.height = iframeUZ.contentWindow.document.body.scrollHeight + 'px';
+        attachHoverHandler(iframeRU, iframeUZ);
+
+        iframeMkBook.onload = function () {
+            iframeMkBook.style.height = iframeMkBook.contentWindow.document.body.scrollHeight + 'px';
+            iframeMkBook.contentWindow.document.addEventListener('click', function (event) {
+                if (event.target.tagName === 'A') {
+                    event.preventDefault();
+                    const url = event.target.href;
+                    window.top.location.href = url;
+                }
+            });
+        }
+
+    };
 };
 
 if (iframeMkBook) {

@@ -9,6 +9,9 @@ lerna-debug.log*
 
 
 # My custom folders
+books
+RU-UZ/chapters*
+src*
 
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
