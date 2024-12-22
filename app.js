@@ -3,8 +3,8 @@ const path = require('path');
 const { JSDOM } = require("jsdom");
 const beautify = require("js-beautify").html;
 
-const SRC_PATH = path.join(__dirname, 'src');
 const DIST_PATH = path.join(__dirname, "RU-UZ")
+const SRC_PATH = path.join(DIST_PATH, 'src');
 const RU_PATH = path.join(SRC_PATH, 'RU');
 const UZ_PATH = path.join(SRC_PATH, 'UZ');
 const RU_UZ_PATH = path.join(DIST_PATH, 'chapters');
